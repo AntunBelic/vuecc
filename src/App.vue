@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <TodosComponent v-bind:todos="todos" v-on:del-todo="deleteTodo" v-on:mark-completed="markTodo"/>
-    <AddTodo />
+    <AddTodo v-on:add-todo='addTodo'/>
   </div>
 </template>
 
@@ -42,6 +42,9 @@ export default {
     },
     markTodo(id){
       this.todos = this.todos.map(todo => todo.id === id ? {...todo,completed:!todo.completed}:todo )
+    },
+    addTodo(newTodo){
+      this.todos = [...this.todos,newTodo]
     }
   }
 }
@@ -53,4 +56,15 @@ export default {
   margin: 0;
   padding: 0;
 }
+.btn {
+    display: inline-block;
+    border: none;
+    background: #555;
+    color: #fff;
+    padding: 7px 20px;
+    cursor: pointer;
+  }
+  .btn:hover {
+    background: #666;
+  }
 </style>
