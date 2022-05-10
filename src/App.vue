@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <TodosComponent v-bind:todos="todos"/>
+    <TodosComponent v-bind:todos="todos" v-on:del-todo="deleteTodo" v-on:mark-completed="markTodo"/>
+    <AddTodo />
   </div>
 </template>
 
 <script>
 import TodosComponent from "./components/TodosComponent.vue"
+import AddTodo from "./components/AddTodo.vue"
 
 export default {
   name: 'App',
   components: {
-    TodosComponent
+    TodosComponent,
+    AddTodo
 },
   data(){
     return {
@@ -23,7 +26,7 @@ export default {
         {
           id:2,
           title:"Todo Two",
-          completed:false
+          completed:true
         },
         {
           id:3,
@@ -31,6 +34,14 @@ export default {
           completed:false
         }
       ]
+    }
+  },
+  methods:{
+    deleteTodo(id){
+      this.todos=this.todos.filter(todo=>todo.id !== id)
+    },
+    markTodo(id){
+      this.todos = this.todos.map(todo => todo.id === id ? {...todo,completed:!todo.completed}:todo )
     }
   }
 }
